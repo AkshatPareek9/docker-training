@@ -1,0 +1,36 @@
+---
+# Login on cli using docker login credentials
+docker login
+#  <username>
+#  <password/personal access token>
+
+# Pull hello-world basic image from docker hub
+docker pull hello-world
+
+# List all the docker images
+docker images
+
+# Start the container of the image hello-world
+docker run hello-world
+
+# List the running containers
+docker ps
+
+# Pull mysql image from docker hub
+docker pull mysql
+docker images
+
+# Run the container in background (detach mode) with environment variables
+docker run -d -e MYSQL_ROOT_PASSWORD=root mysql
+
+# List the running/non running containers
+docker ps -a
+
+# Stop the running container
+docker stop <container id>
+
+# Start the container
+docker start <container id>
+
+# to go inside container  
+docker exec -it <container_id> bash  
