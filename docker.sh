@@ -13,4 +13,8 @@ docker ps -a
 
 docker stop <container_id>  
 docker ps -a  
-docker start <container_id>  
+docker start <container_id>   
+
+# to go inside container  
+docker exec -it <container_id> bash  
+
