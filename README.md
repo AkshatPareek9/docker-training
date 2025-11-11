@@ -62,7 +62,7 @@ Docker follows a **client-server architecture** consisting of several key compon
 
 ---
 
-### 📘 Example Docker Workflow
+### 📘 Let's Play with Docker
 
 ```bash
 # Pull an image from Docker Hub
@@ -76,6 +76,9 @@ docker ps
 
 # Stop a container
 docker stop <container_id>   
+
+# Start a container
+docker start <container_id>   
 ```
 ---
 
@@ -123,8 +126,7 @@ unless connected through a defined network.
 
 ### Docker Swarm
 
-Docker Swarm is Docker's native orchestration tool, similar in purpose
-to Kubernetes. It allows you to:
+Docker Swarm is Docker's native orchestration tool, similar in purpose to Kubernetes. It allows you to:   
 
 -   Run Docker containers across multiple nodes (machines).\
 -   Manage scaling, deployment, and load balancing.\
@@ -132,6 +134,18 @@ to Kubernetes. It allows you to:
 -   Maintain high availability through manager and worker nodes.\
 -   Deploy applications as services using declarative configurations.
 
-Swarm is simpler than Kubernetes but less feature-rich. It provides an
-easier entry point for container orchestration with built-in Docker
-tooling.
+Swarm is simpler than Kubernetes but less feature-rich. It provides an easier entry point for container orchestration with built-in Docker tooling.
+
+---
+
+### 📘 Play with Docker Network Commands
+
+```bash
+# List all the available network in the Docker   
+docker network ls   
+
+# Create a new network   
+docker network create <network_name> -d bridge   
+Note: -d = driver   
+```
+---
