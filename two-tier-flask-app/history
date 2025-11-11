@@ -1,0 +1,19 @@
+cd docker-training/two-tier-flask-app/
+cat app.py
+vim Dockerfile
+docker network ls
+docker network create two-tier -d bridge
+docker network  ls
+docker images
+docker login
+docker pull mysql
+docker images | grep mysql
+docker run -d --name mysql --network two-tier -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=devops mysql
+docker build -t two-tier-backend .
+docker run -d --name two-tier-backend --network two-tier -p 5000:5000 -e MYSQL_HOST="mysql" -e MYSQL_USER="root" -e MYSQL_PASSWORD="root" -e MYSQL_DB="devops" two-tier-backend:latest
+docker ps | grep two-tier-backend
+docker ps | grep mysql
+docker logs two-tier-backend
+docket logs mysql
+docker exec -it two-tier-backend bash
+docker exec -it mysql bash
