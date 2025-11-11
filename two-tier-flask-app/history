@@ -14,21 +14,21 @@ docker login
 docker pull mysql
 docker images | grep mysql
 docker run -d --name mysql --network two-tier -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=devops mysql
-docker build -t two-tier-backend .
-docker run -d --name two-tier-backend --network two-tier -p 5000:5000 -e MYSQL_HOST="mysql" -e MYSQL_USER="root" -e MYSQL_PASSWORD="root" -e MYSQL_DB="devops" two-tier-backend:latest
-docker ps | grep two-tier-backend
+docker build -t flask-app .
+docker run -d --name flask-app --network two-tier -p 5000:5000 -e MYSQL_HOST="mysql" -e MYSQL_USER="root" -e MYSQL_PASSWORD="root" -e MYSQL_DB="devops" flask-app:latest
+docker ps | grep flask-app
 docker ps | grep mysql
-docker logs two-tier-backend
+docker logs flask-app
 docket logs mysql
-docker exec -it two-tier-backend bash
+docker exec -it flask-app bash
 docker exec -it mysql bash
 docker network inspect two-tier
-docker stop two-tier-backend && docker rm two-tier-backend
-docker run -d --name two-tier-backend --network two-tier -p 5000:5000 -e MYSQL_HOST=mysql -e MYSQL_USER=root -e MYSQL_PASSWORD=root -e MYSQL_DB=devops two-tier-backend
+docker stop flask-app && docker rm flask-app
+docker run -d --name flask-app --network two-tier -p 5000:5000 -e MYSQL_HOST=mysql -e MYSQL_USER=root -e MYSQL_PASSWORD=root -e MYSQL_DB=devops flask-app
 docker stop mysql && docker rm mysql
 docker run -d --name mysql --network two-tier -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=devops mysql
-docker stop two-tier-backend && docker rm two-tier-backend
-docker run -d --name two-tier-backend --network two-tier  -p 5000:5000 -e MYSQL_HOST=mysql -e MYSQL_USER=root -e MYSQL_PASSWORD=root -e MYSQL_DB=devops two-tier-backend
+docker stop flask-app && docker rm flask-app
+docker run -d --name flask-app --network two-tier  -p 5000:5000 -e MYSQL_HOST=mysql -e MYSQL_USER=root -e MYSQL_PASSWORD=root -e MYSQL_DB=devops flask-app
 
 ## use volume to persist the data
 docker volume ls
@@ -36,17 +36,20 @@ docker volume create mysql-data
 docker volume ls
 docker stop mysql && docker rm mysql
 docker run -d --name mysql --network two-tier -v mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=devops mysql
-docker stop two-tier-backend && docker rm two-tier-backend
-docker run -d --name two-tier-backend --network two-tier  -p 5000:5000 -e MYSQL_HOST=mysql -e MYSQL_USER=root -e MYSQL_PASSWORD=root -e MYSQL_DB=devops two-tier-backend
+docker stop flask-app && docker rm flask-app
+docker run -d --name flask-app --network two-tier  -p 5000:5000 -e MYSQL_HOST=mysql -e MYSQL_USER=root -e MYSQL_PASSWORD=root -e MYSQL_DB=devops flask-app
 docker ps -a
-docker stop two-tier-backend && docker rm two-tier-backend
-docker run -d --name two-tier-backend --network two-tier  -p 5000:5000 -e MYSQL_HOST=mysql -e MYSQL_USER=root -e MYSQL_PASSWORD=root -e MYSQL_DB=devops two-tier-backend
+docker stop flask-app && docker rm flask-app
+docker run -d --name flask-app --network two-tier  -p 5000:5000 -e MYSQL_HOST=mysql -e MYSQL_USER=root -e MYSQL_PASSWORD=root -e MYSQL_DB=devops flask-app
 docker stop mysql && docker rm mysql
 docker run -d --name mysql --network two-tier -v mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=devops mysql
 docker volume inspect mysqldata
 
 ## use custom volume path
 docker stop mysql && docker rm mysql
-docker stop two-tier-backend && docker rm two-tier-backend
+docker stop flask-app && docker rm flask-app
 docker run -d --name mysql --network two-tier -v ./mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=devops mysql
-docker run -d --name two-tier-backend --network two-tier  -p 5000:5000 -e MYSQL_HOST=mysql -e MYSQL_USER=root -e MYSQL_PASSWORD=root -e MYSQL_DB=devops two-tier-backend
+docker run -d --name flask-app --network two-tier  -p 5000:5000 -e MYSQL_HOST=mysql -e MYSQL_USER=root -e MYSQL_PASSWORD=root -e MYSQL_DB=devops flask-app
+
+## Build the image using multi stage Dockerfile
+docker build -t flask-app-mini .
