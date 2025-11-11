@@ -1,6 +1,11 @@
+# Commands for docker learning
 cd docker-training/two-tier-flask-app/
 cat app.py
+
+## Build the image using docker file
 vim Dockerfile
+
+## Attach a default bridge network between both the containers (flask app and mysql)
 docker network ls
 docker network create two-tier -d bridge
 docker network  ls
@@ -17,3 +22,31 @@ docker logs two-tier-backend
 docket logs mysql
 docker exec -it two-tier-backend bash
 docker exec -it mysql bash
+docker network inspect two-tier
+docker stop two-tier-backend && docker rm two-tier-backend
+docker run -d --name two-tier-backend --network two-tier -p 5000:5000 -e MYSQL_HOST=mysql -e MYSQL_USER=root -e MYSQL_PASSWORD=root -e MYSQL_DB=devops two-tier-backend
+docker stop mysql && docker rm mysql
+docker run -d --name mysql --network two-tier -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=devops mysql
+docker stop two-tier-backend && docker rm two-tier-backend
+docker run -d --name two-tier-backend --network two-tier  -p 5000:5000 -e MYSQL_HOST=mysql -e MYSQL_USER=root -e MYSQL_PASSWORD=root -e MYSQL_DB=devops two-tier-backend
+
+## use volume to persist the data
+docker volume ls
+docker volume create mysql-data
+docker volume ls
+docker stop mysql && docker rm mysql
+docker run -d --name mysql --network two-tier -v mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=devops mysql
+docker stop two-tier-backend && docker rm two-tier-backend
+docker run -d --name two-tier-backend --network two-tier  -p 5000:5000 -e MYSQL_HOST=mysql -e MYSQL_USER=root -e MYSQL_PASSWORD=root -e MYSQL_DB=devops two-tier-backend
+docker ps -a
+docker stop two-tier-backend && docker rm two-tier-backend
+docker run -d --name two-tier-backend --network two-tier  -p 5000:5000 -e MYSQL_HOST=mysql -e MYSQL_USER=root -e MYSQL_PASSWORD=root -e MYSQL_DB=devops two-tier-backend
+docker stop mysql && docker rm mysql
+docker run -d --name mysql --network two-tier -v mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=devops mysql
+docker volume inspect mysqldata
+
+## use custom volume path
+docker stop mysql && docker rm mysql
+docker stop two-tier-backend && docker rm two-tier-backend
+docker run -d --name mysql --network two-tier -v ./mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=devops mysql
+docker run -d --name two-tier-backend --network two-tier  -p 5000:5000 -e MYSQL_HOST=mysql -e MYSQL_USER=root -e MYSQL_PASSWORD=root -e MYSQL_DB=devops two-tier-backend
