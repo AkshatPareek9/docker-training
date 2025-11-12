@@ -480,4 +480,5 @@ We **welcome contributions!** If you have insights, new tools, or improvements, 
 🔗 **GitHub:** [@AkshatPareek](https://github.com/AkshatPareek9)  
 💬 **Instagram Community:** [Follow Here](https://www.instagram.com/devops_hub_university)  
 
-![Follow Me](https://imgur.com/2j7GSPs.png)
+![Follow Me](<img width="1679" height="697" alt="DevOpsHubUniversity" src="https://github.com/user-attachments/assets/d757bbd1-f08d-4553-a9f4-98f9370215df" href="https://github.com/AkshatPareek9" />)
+
