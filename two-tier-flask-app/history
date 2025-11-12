@@ -53,3 +53,12 @@ docker run -d --name flask-app --network two-tier  -p 5000:5000 -e MYSQL_HOST=my
 
 ## Build the image using multi stage Dockerfile
 docker build -t flask-app-mini .
+docker stop mysql && docker rm mysql
+docker stop flask-app && docker rm flask-app
+docker run -d --name mysql --network two-tier -v ./mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=devops mysql
+docker run -d --name flask-app --network two-tier  -p 5000:5000 -e MYSQL_HOST=mysql -e MYSQL_USER=root -e MYSQL_PASSWORD=root -e MYSQL_DB=devops flask-app
+
+## Build the application using docker-compose
+docker compose up
+docker compose up -d
+docker compose down

@@ -11,7 +11,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy the requirements and rest file into the container
-COPY requirements.txt .
+COPY src/requirements.txt .
 
 # Install app dependencies
 RUN pip install mysqlclient
@@ -31,6 +31,6 @@ RUN apt-get update && \
 
 # Copy dependencies and application code from the builder stage
 COPY --from=builder /usr/local/lib/python3.9/site-packages/ /usr/local/lib/python3.9/site-packages/
-COPY . .
+COPY src/. .
 
 CMD ["python", "app.py"]
