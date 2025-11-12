@@ -6,9 +6,8 @@ services:
          - mysql-data:/var/lib/mysql
        networks:
          - two-tier
-       environment:
-         MYSQL_ROOT_PASSWORD: "root"
-         MYSQL_DATABASE: "devops"
+       env_file:
+       - ".env"
        ports:
          - 3306:3306
        restart: always
@@ -26,11 +25,8 @@ services:
          context: .
        networks:
          - two-tier
-       environment:
-         MYSQL_PASSWORD: "root"
-         MYSQL_DB: "devops"
-         MYSQL_HOST: "mysql"
-         MYSQL_USER: "root"
+       env_file:
+       - ".env"
        ports:
          - 5000:5000
        depends_on:

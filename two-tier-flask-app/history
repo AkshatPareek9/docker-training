@@ -62,3 +62,12 @@ docker run -d --name flask-app --network two-tier  -p 5000:5000 -e MYSQL_HOST=my
 docker compose up
 docker compose up -d
 docker compose down
+
+## Cleanup unused container and dungling images
+docker system prune
+docker rmi flask-app
+docker rmi flask-app-mini
+
+## Push the image to Docker Register (Docker Hub)
+docker image tag flask-app:latest akshatpareek9/flask-app-hub-new:latest
+docker push akshatpareek9/flask-app-hub-new:latest
