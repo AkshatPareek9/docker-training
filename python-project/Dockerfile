@@ -5,7 +5,7 @@ FROM python:3.7
 WORKDIR /app
 
 # Copy the python code
-COPY . .
+COPY src/. .
 
 # Install the required packages
 RUN pip install -r requirements.txt
