@@ -5,10 +5,10 @@ FROM python:3.7
 WORKDIR /app
 
 # Copy the python code
-COPY src/. .
+COPY . .
 
 # Install the required packages
-RUN pip install -r requirements.txt
+RUN pip install -r src/requirements.txt
 
 # Execute the python application
 ENTRYPOINT ["python", "run.py"]
